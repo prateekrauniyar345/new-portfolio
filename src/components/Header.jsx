@@ -14,16 +14,16 @@ const Header = () => {
       "
     >
       {/* LOGO (left) */}
-      <a href="/" className="d-inline-block">
-        <img src="logo.png" alt="profile" style={{ height: 40, width: 40 }} />
-      </a>
+      <Link to="/" className="d-inline-block">
+            <img src="logo.png" alt="profile" height={40} width={40} />
+      </Link>
 
       {/* NAVIGATION (centre) */}
       <nav className="flex-grow-1">        {/* allow nav to stretch   */}
         <ul
           className="
-            d-flex justify-content-center  /* centre within flex-grow */
-            align-items-center gap-5       /* equal horizontal gaps   */
+            d-flex flex-wrap justify-content-center  /* centre within flex-grow */
+            align-items-center gap-3 gap-md-5       /* equal horizontal gaps   */
             list-unstyled m-0 fw-bold
           "
         >
