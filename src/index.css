@@ -1,0 +1,12 @@
+/* index.css (global) */
+:root {
+  --bg-dark:  #000000;   /* ✅ 6-digit hex */
+  --fg-light: #ffffff;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+body {
+  background-color: var(--bg-dark);   /* must use var() */
+  color:            var(--fg-light);
+}
