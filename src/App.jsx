@@ -1,16 +1,19 @@
-import Header from './components/Header'
-import './App.css'
+import Header from './components/Header';
+import './App.css';
 
 function App() {
-
   return (
     <>
-    <Header/>
-      <div>
-          <p>This is a portfolio web page. </p>
+      <div
+        className="d-flex flex-column align-items-center min-vh-100 mt-4"
+      >
+        <div style={{ maxWidth: '800px', width: '100%' }}>
+          <Header />
+        </div>
+        <p>this is iunfo section</p>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

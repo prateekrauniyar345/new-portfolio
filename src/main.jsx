@@ -5,6 +5,7 @@ import './index.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';     // Bootstrap JS plugins
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom';
+import './icon.js';            // <-- side-effect import, no export
 
 
 
