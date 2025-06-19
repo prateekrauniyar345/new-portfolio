@@ -10,7 +10,7 @@ function App() {
         <div style={{ maxWidth: '800px', width: '100%' }}>
           <Header />
         </div>
-        <p>this is iunfo section</p>
+        <p>this is info section</p>
       </div>
     </>
   );
