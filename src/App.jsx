@@ -1,7 +1,11 @@
 import Header from './components/Header';
 import Home from './pages/Home';
+import About from './pages/About';
+import Contact from './pages/Contacts';
+import Project from './pages/Project';
 import './App.css';
 import ThemeProvider from './components/ThemeProvider';
+import {Link, Routes, Route} from 'react-router-dom';
 
 function App() {
   return (
@@ -14,7 +18,15 @@ function App() {
           {/* this ia a haeder */}
           <div style={{ maxWidth: '800px', width: '100%' }}>
             <Header />
-            <Home />
+
+          {/* use of router for page navigation */}
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About/>} />
+                <Route path="/project" element={ <Project />} />
+                <Route path="/contact" element={ <Contact />} />
+                <Route path="*" element={<div>404 Not Found</div>} />
+              </Routes>
           </div>
 
 

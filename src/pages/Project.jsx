@@ -1,13 +1,13 @@
-const Contact = () =>{
+const Project = () =>{
     return(
         <>
             <div>
                 <p>
-                    this is about Contact.
+                    this is about Project.
                 </p>
             </div>
         </>
     )
 }
 
-export default Contact;
+export default Project;
