@@ -1,9 +1,13 @@
 // Header.jsx
 import { Link, useLocation } from 'react-router-dom';
+import { useContext } from 'react';
 import { FontAwesomeIcon }   from '@fortawesome/react-fontawesome';
+import { ThemeContext } from './ThemeContext';
+
 
 const Header = () => {
   const { pathname } = useLocation();
+  const { theme, toggleTheme } = useContext(ThemeContext); 
 
   return (
     <header            /* full-width bar */
@@ -11,6 +15,7 @@ const Header = () => {
         w-100 py-3 px-4                  /* top/bottom & side padding   */
         d-flex justify-content-between   /* space-between the 3 blocks  */
         align-items-center               /* vertical centring           */
+        fs-5
       "
     >
       {/* LOGO (left) */}
@@ -31,7 +36,7 @@ const Header = () => {
             <Link
               to="/"
               aria-current={pathname === '/' ? 'page' : undefined}
-              className="text-white text-decoration-none"
+              className={`${theme === 'dark' ? 'text-white' : 'text-dark'} text-decoration-none`}
             >
               Home
             </Link>
@@ -40,7 +45,7 @@ const Header = () => {
             <Link
               to="/about"
               aria-current={pathname === '/about' ? 'page' : undefined}
-              className="text-white text-decoration-none"
+              className={`${theme === 'dark' ? 'text-white' : 'text-dark'} text-decoration-none`}
             >
               About
             </Link>
@@ -49,7 +54,7 @@ const Header = () => {
             <Link
               to="/project"
               aria-current={pathname === '/project' ? 'page' : undefined}
-              className="text-white text-decoration-none"
+              className={`${theme === 'dark' ? 'text-white' : 'text-dark'} text-decoration-none`}
             >
               Projects
             </Link>
@@ -58,7 +63,7 @@ const Header = () => {
             <Link
               to="/contact"
               aria-current={pathname === '/contact' ? 'page' : undefined}
-              className="text-white text-decoration-none"
+              className={`${theme === 'dark' ? 'text-white' : 'text-dark'} text-decoration-none`}
             >
               Contacts
             </Link>
@@ -67,7 +72,22 @@ const Header = () => {
       </nav>
 
       {/* THEME ICON (right) */}
-      <FontAwesomeIcon icon={['fas', 'sun']} className="text-white fs-4" />
+      { theme === 'dark' ? (
+        <FontAwesomeIcon
+          icon="sun"
+          className="text-white fs-4"
+          onClick={toggleTheme}
+          style={{ cursor: 'pointer' }}
+        />
+      ) : (
+        <FontAwesomeIcon
+          icon="moon"
+          className={`${theme === 'dark' ? 'text-white' : 'text-dark'} fs-4`}
+          onClick={toggleTheme}
+          style={{ cursor: 'pointer' }}
+        />
+      )}
+      
     </header>
   );
 };

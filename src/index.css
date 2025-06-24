@@ -7,6 +7,37 @@
 }
 
 body {
-  background-color: var(--bg-dark);   /* must use var() */
-  color:            var(--fg-light);
+  background-color: var(--bg-dark);   
+  color:            var(--fg-light) !important;
+  font-family: monospace;
+}
+
+body.light {
+  --bg-dark:  #ffffff;   
+  --fg-light: #000000;
+}
+
+/* --- typewriter effect fix --- */
+.typewriter {
+  display: inline-block;          
+  overflow: hidden;               /* keep text clipped while “typing”        */
+  white-space: nowrap;
+  border-right: .15em solid #ffffff;
+
+  /* adjust the two numbers to taste:
+     3.5 s  → overall duration
+     30     → number of “key presses” (≈ characters)                       */
+  animation:
+    typing 3.5s steps(30, end) forwards,
+    blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }               /* start hidden                            */
+  to   { width: 100% }            /* reveal full width                       */
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50%      { border-color: #ffffff }
 }
