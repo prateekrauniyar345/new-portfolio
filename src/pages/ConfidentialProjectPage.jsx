@@ -22,7 +22,7 @@ const ConfidentialProjectPage = () => {
           <div className="p-4  mb-4" style={{}}>
             <p className="mb-0">
               <strong>Proprietary&nbsp;Notice:</strong>&nbsp;This project was developed under contract for
-              <strong>&nbsp;University of Idaho</strong>, and all source code and design documentation are protected by the company's intellectual‑property policies.
+              <strong>&nbsp;University of Idaho</strong>, and all source code and design documentation are protected by the University's intellectual-property policies.
               Consequently, the repository cannot be shared publicly.
             </p>
           </div>
