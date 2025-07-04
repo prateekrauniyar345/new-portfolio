@@ -49,14 +49,14 @@ const projects = [
     skills: ['Flask', 'Plotly', 'MySQL', 'Git'],
     link:'/confidential?project=Research Budget Analysis Tool',
     description:
-      'Full-stack dashboard that ingests university expenditure data and renders interactive charts and drill-downs for department-level analytics. Deployed internally for faculty budget reviews.',
+      'Internally Deployed, Full-stack dashboard that ingests university expenditure data and renders interactive charts and drill-downs for department-level analytics.',
   },
   {
     project: 'SDImax Calculator',
     skills: ['Flask', 'JavaScript', 'ArcGIS API'],
     link:'/confidential/?project=SDImax Calculator',
     description:
-      'End-to-end web application (and CLI package) that predicts Soil Dryness Index maximum values using a retrained ML model, with direct ArcGIS Pro integration for geospatial analysts.',
+      'Enterprise level, End-to-end web application with ML integration that predicts Maximum Trees Stand Density Index, given different parameters as Input or in the form of Shapefile.',
   },
   {
     project: 'Sentiment Analysis Pipeline',
@@ -73,30 +73,37 @@ const projects = [
       'Workspace-orchestration tool that launches and arranges development environments automatically, using an LLM agent to infer optimal layouts from project metadata.',
   },
   {
-    project: 'Part Locator',
-    skills: ['Flask', 'JavaScript', 'SQL'],
-    link:'https://github.com/prateekrauniyar345/Parks-Locator',
-    description:
-      'Search engine for manufacturing parts that matches textual queries to a relational inventory, featuring fuzzy search algorithms and an intuitive web UI.',
-  },
-  {
     project: 'Research Grant Budget Generator',
     skills: ['Flask', 'JavaScript', 'SQL', 'Plotly'],
     link:'https://github.com/prateekrauniyar345/grant-budget-manager',
     description:
-      'This project is a web-based tool designed to automate the generation of research grant budgets. It allows users to input various parameters and automatically calculates budget estimates, streamlining the grant application process.',
+      'Full Stack web app for generating and managing research grant budgets with features to download, share and export budgets in various formats.',
   },
   {
-    project: 'Vlora (Online Fashion Store)',
+    project: 'Valora (Online Fashion Store)',
     skills: ['React', 'NodeJS', 'Express', 'MongoDB', 'Stripe'],
     link:'https://github.com/prateekrauniyar345/lab-final',
     description:
-      'This project is an online fashion store built with a modern MERN stack. It features user authentication, product listings, and a shopping cart, all while integrating Stripe for secure payments.',
+      'E-Commerce platform with user authentication, product listings, and a shopping cart, integrating Stripe for secure payments.',
   },
 
-
-
 ];
+
+const certifications = [
+  {
+    title: 'SQL for Data Science',
+    provider: 'Coursera — University of California, Davis',
+    referenceId: 'turn0search0',   // official course page
+    link: 'https://courses.edx.org/certificates/742e2f851cef479b87f91cfe877c6fce',
+  },
+  {
+    title: 'Supervised Machine Learning: Regression and Classification',
+    provider: 'DeepLearning.AI / Coursera — Machine Learning Specialization (Course 1)',
+    referenceId: 'turn0search3',   // official course page
+    link: 'https://www.coursera.org/account/accomplishments/verify/VDULR30U389G',
+  },
+];
+
 
 const techColours = {
   /* ── languages ─────────────────────────────── */
@@ -111,6 +118,7 @@ const techColours = {
   Express:       '#fb923c',  // orange  (alias below)
   'Express.js':  '#fb923c',
   'DeepSeek LLM':'#8b5cf6',  // violet
+  MongoDB:       '#47a248',  // MongoDB green
 
   /* ── front-end / UI libs ───────────────────── */
   React:         '#06b6d4',  // cyan
@@ -127,7 +135,16 @@ const techColours = {
   /* ── tools / VCS / DB ──────────────────────── */
   Git:           '#f34f29',  // Git orange
   MySQL:         '#00758F',  // MySQL teal
+  'Stripe':      '#f59e0b',  // Stripe yellow
 };
+
+
+const Hobbies = [
+  { title: 'Gaming', description: 'I enjoy playing video games, both single-player and multiplayer.' },
+  { title: 'Hiking', description: 'I like to go hiking and explore nature on weekends.' },
+  { title: 'Cooking', description: 'I enjoy experimenting with new recipes and cooking for friends and family.' },
+  { title: 'Traveling', description: 'I love to travel and experience new cultures and cuisines.' },
+];
 
 
 
@@ -241,6 +258,44 @@ export default function About() {
         </div>
       ))}
     </div>
+
+
+    {/* certifications
+    <div>
+      <h3 className="mt-5">Certifications</h3>
+      <p className="text-secondary small mb-0">
+        {certifications.map((cer, idx) => (
+          <span key={idx}>
+            <a
+              href={cer.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <p style={{color:"white"}}>{cer.title}</p>
+            </a>
+          </span>
+        ))}
+      </p>
+    </div> */}
+
+
+    {/* Hobbies */}
+    <div className="mt-5">
+      <h3>Hobbies</h3>
+      <div className="row">
+        {Hobbies.map((hobby, index) => (
+          <div className='col-md-6 col-12 mb-3' key={index}>
+            <p className='fw-bold'>
+              {hobby.title}
+            </p>
+            <p className='text-secondary small mb-0 lh-sm'>
+              {hobby.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
 
     <div className="mb-5"></div>
 
