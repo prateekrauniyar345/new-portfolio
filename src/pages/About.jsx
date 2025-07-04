@@ -1,5 +1,6 @@
 // About.jsx
 import { getRandomInt } from '../utils/Random';
+import { useNavigate } from 'react-router-dom';
 
 const images = ['IMG_1100.png', 'IMG_1544.png', 'IMG_1819.png', 'IMG_4681.png'];
 
@@ -131,6 +132,8 @@ const techColours = {
 
 
 export default function About() {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="d-flex flex-column mt-4">
@@ -200,8 +203,12 @@ export default function About() {
       {projects.map((proj, i) => (
         <div key={i} className="row gy-2 mb-3 align-items-start hoverEffect"
          onClick={(e) => {
-            // Open the project link in a new tab
-            if (proj.link) {
+            // Check if it's an internal route (confidential page)
+            if (proj.link === '/confidential') {
+              // Navigate to internal route with project parameter
+              navigate(`/confidential?project=${encodeURIComponent(proj.project)}`);
+            } else if (proj.link) {
+              // Open external links in new tab
               window.open(proj.link, '_blank', 'noopener,noreferrer');
             }
           }}
