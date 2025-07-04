@@ -7,6 +7,7 @@ import ConfidentialProjectPage from './pages/ConfidentialProjectPage';
 import './App.css';
 import ThemeProvider from './components/ThemeProvider';
 import {Link, Routes, Route} from 'react-router-dom';
+import Footer from './components/Footer'; 
 
 function App() {
   return (
@@ -30,10 +31,11 @@ function App() {
                 <Route path="*" element={<div>404 Not Found</div>} />
               </Routes>
           </div>
-
-
       </div>
     </ThemeProvider>
+    {/* Footer component at the bottom of the page */}
+    <Footer />
+
     </>
   );
 }

@@ -1,6 +1,8 @@
 // About.jsx
 import { getRandomInt } from '../utils/Random';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 const images = ['IMG_1100.png', 'IMG_1544.png', 'IMG_1819.png', 'IMG_4681.png'];
 
@@ -140,10 +142,38 @@ const techColours = {
 
 
 const Hobbies = [
-  { title: 'Gaming', description: 'I enjoy playing video games, both single-player and multiplayer.' },
-  { title: 'Hiking', description: 'I like to go hiking and explore nature on weekends.' },
-  { title: 'Cooking', description: 'I enjoy experimenting with new recipes and cooking for friends and family.' },
-  { title: 'Traveling', description: 'I love to travel and experience new cultures and cuisines.' },
+  { 
+    title: 'Gaming', 
+    description: 'I enjoy playing video games, both single-player and multiplayer.' ,
+    dos : 'valorant',
+    iconTypes : 'img',
+    iconSrc : '/valorant.png',
+    color : '#facc15'
+  },
+  { 
+    title: 'Hiking', 
+    description: 'I like to go hiking and explore nature on weekends.' ,
+    dos : 'Wallowa Lake Trailhead(recent)',
+    iconTypes : 'fontawesome',
+    iconSrc : faLocationDot,
+    color : '#47a248'
+  },
+  { 
+    title: 'Cooking', 
+    description: 'I enjoy experimenting with new recipes and cooking for friends and family.' ,
+    dos : 'momos',
+    iconTypes : 'img',
+    iconSrc : '/momos.png',
+    color : '#f59e0b',
+  },
+  { 
+    title: 'Traveling', 
+    description: 'I love to travel and experience new cultures and cuisines.' ,
+    dos : 'Oregon Coast(recent)',
+    iconTypes : 'fontawesome',
+    iconSrc : faLocationDot,
+    color : '#38bdf8',
+  },
 ];
 
 
@@ -206,7 +236,7 @@ export default function About() {
                 <p className='text-secondary fs-6 mb-2'>{job.title}</p>
                 
                 {/* Job description */}
-                <p className='text-secondary small mb-0'>{job.description}</p>
+                <p className='text-secondary lh-sm mb-0 small'>{job.description}</p>
               </div>
             );
           })}
@@ -260,25 +290,6 @@ export default function About() {
     </div>
 
 
-    {/* certifications
-    <div>
-      <h3 className="mt-5">Certifications</h3>
-      <p className="text-secondary small mb-0">
-        {certifications.map((cer, idx) => (
-          <span key={idx}>
-            <a
-              href={cer.link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <p style={{color:"white"}}>{cer.title}</p>
-            </a>
-          </span>
-        ))}
-      </p>
-    </div> */}
-
-
     {/* Hobbies */}
     <div className="mt-5">
       <h3>Hobbies</h3>
@@ -289,7 +300,26 @@ export default function About() {
               {hobby.title}
             </p>
             <p className='text-secondary small mb-0 lh-sm'>
-              {hobby.description}
+              {hobby.iconTypes === 'img' ? (
+                <>
+                  {hobby.description}
+                  <p style={{color : hobby.color}}>
+                    {hobby.dos}
+                    <img src={hobby.iconSrc} alt={hobby.title} style={{ width: '20px', height: '20px', borderRadius: '4px' }} />
+                  </p>
+                </>
+              ) : (
+                <>
+                  {hobby.description}
+                  <p style={{color : hobby.color}}>
+                    {hobby.dos}
+                    <FontAwesomeIcon
+                      icon={hobby.iconSrc}     /* faLocationDot */
+                      size="lg"
+                    />
+                  </p>
+                </>
+              )}
             </p>
           </div>
         ))}
@@ -297,7 +327,7 @@ export default function About() {
     </div>
 
 
-    <div className="mb-5"></div>
+    <div className="mb-3"></div>
 
   </>
   );
