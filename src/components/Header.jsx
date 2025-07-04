@@ -29,7 +29,8 @@ const Header = () => {
           className="
             d-flex flex-wrap justify-content-center  /* centre within flex-grow */
             align-items-center gap-3 gap-md-5       /* equal horizontal gaps   */
-            list-unstyled m-0 fw-bold
+            list-unstyled m-0 
+
           "
         >
           <li>

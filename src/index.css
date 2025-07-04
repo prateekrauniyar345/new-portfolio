@@ -41,3 +41,15 @@ body.light {
   from, to { border-color: transparent }
   50%      { border-color: #ffffff }
 }
+
+.hoverEffect{
+  transition: transform 0.3s ease;
+}
+
+.hoverEffect:hover {
+  transform: scale(1.01);
+}
+
+.takeEffect{
+  cursor: pointer;
+}
