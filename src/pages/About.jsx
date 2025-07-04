@@ -295,7 +295,7 @@ export default function About() {
       <h3>Hobbies</h3>
       <div className="row">
         {Hobbies.map((hobby, index) => (
-          <div className='col-md-6 col-12 mb-3' key={index}>
+          <div className='col-md-6 col-12 mb-3 hoverEffect' key={index}>
             <p className='fw-bold'>
               {hobby.title}
             </p>
