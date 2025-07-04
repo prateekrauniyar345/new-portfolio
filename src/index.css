@@ -53,3 +53,9 @@ body.light {
 .takeEffect{
   cursor: pointer;
 }
+
+.icon-hover .mx-2:hover {
+  cursor: pointer; /* Ensure pointer cursor on hover */
+  color: white; /* Change text color to white on hover */
+  transition: color 0.3s ease; /* Smooth transition effect */
+}
