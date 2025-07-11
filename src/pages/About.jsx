@@ -245,7 +245,7 @@ export default function About() {
 
 
       <div className="mt-4">
-      <h3 className="mb-4">Projects</h3>
+      <h3 className="mb-2">Projects</h3>
 
       {projects.map((proj, i) => (
         <div key={i} className="row gy-2 mb-3 align-items-start hoverEffect"
