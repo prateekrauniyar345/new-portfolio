@@ -19,7 +19,7 @@ const Gear = () =>{
         },
         { 
             name: 'Macbookpro', 
-            description: 'Apple M4 chip with 10-core CPU, 10-core GPU, 16-core Neural Engine', 
+            description: 'Apple M3 chip with 10-core CPU, 10-core GPU, 16-core Neural Engine', 
             image : 'macbookpro.jpg',
             link : 'https://www.apple.com/shop/buy-mac/macbook-pro/14-inch-space-black-standard-display-apple-m4-chip-with-10-core-cpu-and-10-core-gpu-16gb-memory-1tb',
         },
@@ -31,7 +31,7 @@ const Gear = () =>{
         },
         { 
             name: 'Mouse', 
-            description: 'Wireless Gaming Mouse Bluetooth Mouse', 
+            description: 'Wireless Gaming Mouse Bluetooth/USB 2.4G Rechargeable', 
             image : 'mouse.jpg',
             link : 'https://www.amazon.com/dp/B0B7PPZVN7/ref=sspa_dk_detail_4?pd_rd_i=B0B7PPZVN7&pd_rd_w=5DTNd&content-id=amzn1.sym.386c274b-4bfe-4421-9052-a1a56db557ab&pf_rd_p=386c274b-4bfe-4421-9052-a1a56db557ab&pf_rd_r=4QY362KJ066853W30J06&pd_rd_wg=kxXgk&pd_rd_r=934c4997-5a2f-4986-8bb7-4f2d3cd0dd46&s=electronics&sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWxfdGhlbWF0aWM&th=1',
         },
@@ -43,7 +43,7 @@ const Gear = () =>{
         },
         { 
             name: 'Game Supply', 
-            description: 'MSI MAG A650BE Gaming Power Supply', 
+            description: 'MSI MAG A650BE Gaming Power Supply Semi-Modular', 
             image : 'gamesupply.jpg',
             link : 'https://www.amazon.com/dp/B0CZWTS2CL?ref=cm_sw_r_cp_ud_dp_ZFTTEHZC7X5E7853ZAT8&ref_=cm_sw_r_cp_ud_dp_ZFTTEHZC7X5E7853ZAT8&social_share=cm_sw_r_cp_ud_dp_ZFTTEHZC7X5E7853ZAT8',
         },
@@ -73,7 +73,7 @@ const Gear = () =>{
         },
         { 
             name: 'Chair', 
-            description: 'Steelcase Series 2 Office Chair', 
+            description: 'Steelcase Series 2 Office Chair - Ergonomic Work Chair', 
             image : 'chair.jpg',
             link : 'https://www.amazon.com/Steelcase-Office-Microknit-Licorice-Connect/dp/B08L8J6BYV/ref=sr_1_14_sspa?crid=17PV1N2PXM2ZR&dib=eyJ2IjoiMSJ9.ERFmbc57czw5OrOg5YpIO3XM1h7Y9P4BLi8vhIIF6jR8GFHB5v00QwjRnX9BQ2kpAatJkxekvN1rDu9tTDnCYZGo_OpD5ThRCU_Ah8F2FYRha4YnsExAnBc_aQimVwTLFZIcUODhgbSPSSjU_hP0e7RkNE_FrE881gnMrzLd2yu93Ywflcqpy5br86reeVjZMTUfInnM5E3IpMyK6oe2Bpg6tpF47vhxbo4TpEwmjL4xmRtjS0mffKtXMOQPS96xvwAF1LyzogkbuD7UXf-iQfVMOTlk6ibzEQC--zIDl20.FQXurAc5IFNRjhhLojj3NFykbY46sSr0wAxxASont4Q&dib_tag=se&keywords=work%2Bchair&qid=1752220567&s=home-garden&sprefix=work%2Bchai%2Cgarden%2C135&sr=1-14-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&th=1',
         },
@@ -98,6 +98,8 @@ const Gear = () =>{
                     <div
                         key={index}
                         className="col-12 col-md-6 d-flex flex-column align-items-center mb-4 mt-4 hoverEffect"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => window.open(item.link, '_blank')}
                     >
                         <div className="d-flex flex-row align-items-center justify-content-center" style={{fontSize: '12px'}}>
                             <div style={{ width: '70px', height: '70px', marginRight: '20px' }}>
