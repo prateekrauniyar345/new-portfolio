@@ -299,7 +299,7 @@ export default function About() {
             <p className='fw-bold'>
               {hobby.title}
             </p>
-            <p className='text-secondary small mb-0 lh-sm'>
+            <div className='text-secondary small mb-0 lh-sm'>
               {hobby.iconTypes === 'img' ? (
                 <>
                   {hobby.description}
@@ -320,7 +320,7 @@ export default function About() {
                   </p>
                 </>
               )}
-            </p>
+            </div>
           </div>
         ))}
       </div>
