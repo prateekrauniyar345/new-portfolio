@@ -16,6 +16,7 @@ const Header = () => {
         d-flex justify-content-between   /* space-between the 3 blocks  */
         align-items-center               /* vertical centring           */
         fs-5
+        fw-normal                        /* normal font weight for header text */
       "
     >
       {/* LOGO (left) */}
@@ -30,7 +31,6 @@ const Header = () => {
             d-flex flex-wrap justify-content-center  /* centre within flex-grow */
             align-items-center gap-3 gap-md-5       /* equal horizontal gaps   */
             list-unstyled m-0 
-
           "
         >
           <li>
