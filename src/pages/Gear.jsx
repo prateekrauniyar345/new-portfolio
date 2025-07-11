@@ -1,13 +1,13 @@
-const Project = () =>{
+const Gear = () =>{
     return(
         <>
             <div>
                 <p>
-                    this is about Project.
+                    this is about Gear.
                 </p>
             </div>
         </>
     )
 }
 
-export default Project;
+export default Gear;

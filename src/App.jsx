@@ -2,7 +2,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contacts';
-import Project from './pages/Project';
+import Gear from './pages/Gear';
 import ConfidentialProjectPage from './pages/ConfidentialProjectPage';
 import './App.css';
 import ThemeProvider from './components/ThemeProvider';
@@ -25,7 +25,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About/>} />
-                <Route path="/project" element={ <Project />} />
+                <Route path="/gear" element={ <Gear />} />
                 <Route path="/contact" element={ <Contact />} />
                 <Route path="/confidential" element={ <ConfidentialProjectPage />} />
                 <Route path="*" element={<div>404 Not Found</div>} />

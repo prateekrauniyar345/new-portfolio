@@ -53,11 +53,11 @@ const Header = () => {
           </li>
           <li>
             <Link
-              to="/project"
-              aria-current={pathname === '/project' ? 'page' : undefined}
+              to="/gear"
+              aria-current={pathname === '/gear' ? 'page' : undefined}
               className={`${theme === 'dark' ? 'text-white' : 'text-dark'} text-decoration-none`}
             >
-              Projects
+              Gear
             </Link>
           </li>
           <li>
