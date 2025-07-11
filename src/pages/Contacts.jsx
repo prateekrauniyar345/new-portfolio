@@ -48,7 +48,7 @@ const Contact = () => {
 
       <div className="row g-4 mt-4">
         {contactData.map((item, idx) => (
-          <div key={idx} className="col-12 col-md-6 small">
+          <div key={idx} className="col-12 col-md-6 small hoverEffect">
             <a
               href={item.link}
               target="_blank"
