@@ -12,7 +12,9 @@ import Footer from './components/Footer';
 function App() {
   return (
     <>
+    
     <ThemeProvider>
+
       {/* ThemeProvider wraps the entire app to provide theme context */}
       <div
         className="d-flex flex-column align-items-center min-vh-100 mt-4"
