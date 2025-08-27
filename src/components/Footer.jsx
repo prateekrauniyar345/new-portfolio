@@ -28,7 +28,7 @@ const Footer = () => {
             <FontAwesomeIcon icon={faEnvelope} className="mx-2" />
           </a>
         </div>
-        <p className='text-center text-secondary small'>© 2023 Pratik Rauniyar. All rights reserved.</p>
+        <p className='text-center text-secondary small'>© 2025 Pratik Rauniyar. All rights reserved.</p>
       </div>
     </>
   );

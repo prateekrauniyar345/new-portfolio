@@ -3,8 +3,25 @@ import { getRandomInt } from '../utils/Random';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import './About.css'; 
 
-const images = ['IMG_1100.png', 'IMG_1544.png', 'IMG_1819.png', 'IMG_4681.png'];
+
+const images = [
+      {
+        'image' : 'IMG_1100.png', 
+        'location' : 'University of Idaho, Idaho, 2023'
+
+      }, {
+        'image' : 'IMG_1544.png',
+        'location' : 'Wallowa Lake, Oregon, 2024'
+      }, {
+        'image' : 'IMG_1819.png',
+        'location' : 'U of I Arboretum, Idaho, 2024'
+      }, {
+        'image' : 'IMG_4681.png',
+        'location' : 'Sand Point, Idaho, 2015'
+      }
+    ]; 
 
 const baseCardStyle = {
   width: 200,
@@ -12,12 +29,18 @@ const baseCardStyle = {
   marginRight: 10,
   borderRadius: 10,
   overflow: 'hidden',
+  position: 'relative',
+  perspective: '1000px',
 };
 
 const imgStyle = {
   width: '100%',
   height: '100%',
   objectFit: 'cover',
+  transition: 'transform 0.6s ease',
+  // transform-origin: 'center',
+  display: 'block',
+  // will-change: 'transform'
 };
 
 const jobsExperience = [
@@ -199,8 +222,11 @@ export default function About() {
         //   const imgStyle  = { ...baseImgStyle, transform: rotation };
 
           return (
-            <div style={cardStyle} key={file}>
-              <img src={`/pp/${file}`} alt={`gallery ${i}`} style={imgStyle} />
+            <div style={cardStyle} key={file.image} className='photo'>
+              <img src={`/pp/${file.image}`} alt={`gallery ${i}`} className="photo__img" />
+              <div className="photo__overlay">
+                <span className="photo__label">{`${file.location}`}</span>
+              </div>
             </div>
           );
         })}
