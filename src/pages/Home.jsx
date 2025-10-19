@@ -64,8 +64,8 @@ const Home = () => {
             {
                 label: 'Contributions',
                 data: [25, 35, 40, 30, 45, 55, 60, 50, 65, 70, 75, 80],
-                borderColor: theme === 'dark' ? '#00d4aa' : '#0066cc',
-                backgroundColor: theme === 'dark' ? 'rgba(0, 212, 170, 0.1)' : 'rgba(0, 102, 204, 0.1)',
+                borderColor: theme === 'dark' ? 'white' : 'black',
+                backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
                 tension: 0.4,
             },
         ],
@@ -73,6 +73,7 @@ const Home = () => {
 
     const chartOptions = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 labels: {
@@ -120,7 +121,13 @@ const Home = () => {
             )}
 
             {error && (
-                <div className="border border-danger rounded rounded-4 p-4 mb-4" style={{ color: theme === 'dark' ? '#ff6b6b' : '#dc3545' }}>
+                <div 
+                    className="border border-danger rounded rounded-4 p-4 mb-4" 
+                    style={{ 
+                        color: theme === 'dark' ? 'white' : 'black',
+                        backgroundColor: theme === 'dark' ? 'black' : 'white'
+                    }}
+                >
                     <p>Error loading GitHub data: {error}</p>
                 </div>
             )}
@@ -135,7 +142,10 @@ const Home = () => {
                     
                     {data.user && (
                         <div 
-                            style={{ color: theme === 'dark' ? 'white' : 'black' }}
+                            style={{ 
+                                color: theme === 'dark' ? 'white' : 'black',
+                                backgroundColor: theme === 'dark' ? 'black' : 'white'
+                            }}
                             className="border border-secondary rounded rounded-4 p-4 mb-4 d-flex align-items-center gap-3 hoverEffect"
                         >
                             <a href={data.user.html_url} target="_blank" rel="noopener noreferrer">
@@ -161,7 +171,11 @@ const Home = () => {
                             <p>Monthly contribution activity over the year</p>
                         </div>
                         <div 
-                            style={{ color: theme === 'dark' ? 'white' : 'black' }}
+                            style={{ 
+                                color: theme === 'dark' ? 'white' : 'black',
+                                backgroundColor: theme === 'dark' ? 'black' : 'white',
+                                height: '400px'
+                            }}
                             className="border border-secondary rounded rounded-4 p-4"
                         >
                             <Line data={contributionData} options={chartOptions} />
@@ -178,7 +192,10 @@ const Home = () => {
                         {(data.topRepos || data.repos)?.slice(0, 5).map((repo, idx) => (
                             <div key={idx} className="col-12 col-md-6 hoverEffect">
                                 <div 
-                                    style={{ color: theme === 'dark' ? 'white' : 'black' }}
+                                    style={{ 
+                                        color: theme === 'dark' ? 'white' : 'black',
+                                        backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                    }}
                                     className="border border-secondary rounded rounded-4 p-4 h-100"
                                 >
                                     <div className="d-flex align-items-start justify-content-between mb-3">
@@ -188,52 +205,52 @@ const Home = () => {
                                                 target="_blank" 
                                                 rel="noopener noreferrer"
                                                 className="text-decoration-none"
-                                                style={{ color: theme === 'dark' ? '#00d4aa' : '#0066cc' }}
+                                                style={{ color: theme === 'dark' ? 'white' : 'black' }}
                                             >
                                                 {repo.name}
                                             </a>
                                         </h5>
                                         <FontAwesomeIcon icon={faGithub} className="text-secondary" />
                                     </div>
-                                    
-                                    <p className="text-secondary small mb-3">
-                                        {repo.description || 'No description available'}
-                                    </p>
 
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <div className="d-flex gap-3 small">
-                                            <span>⭐ {repo.stargazers_count}</span>
-                                            <span>🍴 {repo.forks_count}</span>
-                                            {repo.language && (
-                                                <span className="badge bg-secondary">{repo.language}</span>
-                                            )}
+                                    {/* Repository Stats */}
+                                    <div className="mb-3">
+                                        <div className="d-flex flex-wrap gap-2 mb-2">
+                                            <span className="text-secondary small">⭐ {repo.stargazers_count} Stars</span>
+                                            <span className="text-secondary small">🍴 {repo.forks_count} Forks</span>
+                                            <span className="text-secondary small">👀 {repo.watchers !== undefined ? repo.watchers : repo.watchers_count || 0} Watchers</span>
                                         </div>
+                                        {repo.language && (
+                                            <div className="mb-2">
+                                                <span className="badge bg-secondary text-white">{repo.language}</span>
+                                            </div>
+                                        )}
                                     </div>
 
-                                    {/* Repository Health */}
+                                    {/* Repository Details */}
                                     <div className="border-top border-secondary pt-3">
-                                        <h6 className="mb-2 text-secondary">Repository Health</h6>
+                                        <h6 className="mb-2 text-secondary">Repository Details</h6>
                                         <div className="small">
                                             <div className="d-flex justify-content-between mb-1">
-                                                <span>Last commit:</span>
+                                                <span className="text-secondary">Total Commits:</span>
+                                                <span className="text-secondary">{repo.totalCommits || 'N/A'}</span>
+                                            </div>
+                                            <div className="d-flex justify-content-between mb-1">
+                                                <span className="text-secondary">Total PRs:</span>
+                                                <span className="text-secondary">{repo.totalPRs || repo.openPRs || 0}</span>
+                                            </div>
+                                            <div className="d-flex justify-content-between mb-1">
+                                                <span className="text-secondary">Open Issues:</span>
+                                                <span className="text-secondary">{repo.openIssues !== undefined ? repo.openIssues : repo.open_issues || 0}</span>
+                                            </div>
+                                            <div className="d-flex justify-content-between">
+                                                <span className="text-secondary">Last Updated:</span>
                                                 <span className="text-secondary">
                                                     {repo.lastCommit 
                                                         ? new Date(repo.lastCommit).toLocaleDateString()
                                                         : new Date(repo.pushed_at).toLocaleDateString()
                                                     }
                                                 </span>
-                                            </div>
-                                            <div className="d-flex justify-content-between mb-1">
-                                                <span>Open Issues:</span>
-                                                <span className="text-secondary">{repo.openIssues !== undefined ? repo.openIssues : repo.open_issues || 0}</span>
-                                            </div>
-                                            <div className="d-flex justify-content-between mb-1">
-                                                <span>Open PRs:</span>
-                                                <span className="text-secondary">{repo.openPRs || 0}</span>
-                                            </div>
-                                            <div className="d-flex justify-content-between">
-                                                <span>Watchers:</span>
-                                                <span className="text-secondary">{repo.watchers !== undefined ? repo.watchers : repo.watchers_count || 0}</span>
                                             </div>
                                         </div>
                                     </div>

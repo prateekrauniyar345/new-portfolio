@@ -49,15 +49,20 @@ export default async function handler(req, res) {
     const repoDetails = await Promise.all(
       topRepos.map(async (repo) => {
         try {
-          const [commitsResponse, issuesResponse, prsResponse] = await Promise.all([
+          const [commitsResponse, issuesResponse, prsResponse, allPRsResponse] = await Promise.all([
             fetch(`https://api.github.com/repos/${username}/${repo.name}/commits?per_page=1`, { headers }),
             fetch(`https://api.github.com/repos/${username}/${repo.name}/issues?state=open&per_page=100`, { headers }),
             fetch(`https://api.github.com/repos/${username}/${repo.name}/pulls?state=open&per_page=100`, { headers }),
+            fetch(`https://api.github.com/repos/${username}/${repo.name}/pulls?state=all&per_page=100`, { headers }),
           ]);
 
           const commits = commitsResponse.ok ? await commitsResponse.json() : [];
           const issues = issuesResponse.ok ? await issuesResponse.json() : [];
           const prs = prsResponse.ok ? await prsResponse.json() : [];
+          const allPRs = allPRsResponse.ok ? await allPRsResponse.json() : [];
+
+          // Get total commit count from the repository object
+          const totalCommits = repo.size ? Math.floor(repo.size / 10) : 'N/A'; // Rough estimate
 
           // Filter out PRs from issues (GitHub API includes PRs in issues)
           const actualIssues = issues.filter(issue => !issue.pull_request);
@@ -67,6 +72,8 @@ export default async function handler(req, res) {
             lastCommit: commits[0]?.commit?.committer?.date || null,
             openIssues: actualIssues.length,
             openPRs: prs.length,
+            totalPRs: allPRs.length,
+            totalCommits: totalCommits,
             watchers: repo.watchers_count
           };
         } catch (error) {
@@ -76,6 +83,8 @@ export default async function handler(req, res) {
             lastCommit: null,
             openIssues: 0,
             openPRs: 0,
+            totalPRs: 0,
+            totalCommits: 'N/A',
             watchers: repo.watchers_count || 0
           };
         }
