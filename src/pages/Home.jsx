@@ -1,7 +1,31 @@
 import { useContext, useState, useEffect } from 'react';
 import { ThemeContext } from '../components/ThemeContext';
-import { Card, Col, Row, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
+import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import './Home.css';
+
+// Register ChartJS components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Home = () => {
     const { theme } = useContext(ThemeContext);
@@ -13,9 +37,12 @@ const Home = () => {
         fetch('/api/github')
             .then(async res => {
                 if (!res.ok) {
-                    const data = await res.json().catch(() => ({})); // Catch if the body isn't valid JSON
-                    console.error('API response error:', data);
-                    throw new Error(data.error || 'Failed to fetch data from API.');
+                    // Try production URL if local fails
+                    const prodRes = await fetch('https://new-portfolio-prateekrauniyar345s-projects.vercel.app/api/github');
+                    if (!prodRes.ok) {
+                        throw new Error('Failed to fetch GitHub data');
+                    }
+                    return prodRes.json();
                 }
                 return res.json();
             })
@@ -24,89 +51,200 @@ const Home = () => {
                 setLoading(false);
             })
             .catch(error => {
+                console.error('Error:', error);
                 setError(error.message);
                 setLoading(false);
             });
     }, []);
 
-    return (
-        <>
-            <div className="d-flex flex-row justify-content-start align-items-center mt-5">
-                <p className="fs-3 text-secondary">
-                    <span className="typewriter">
-                        Hello, I am <strong style={{ color: theme === 'dark' ? 'white' : 'black' }}>Pratik Rauniyar</strong>.
-                    </span>
-                </p>
-            </div>
-            <p>
-                a programmer and senior computer science student at the University of Idaho, Idaho.
-            </p>
+    // Create contribution graph data (mock data for now - you'd get this from GitHub API)
+    const contributionData = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [
+            {
+                label: 'Contributions',
+                data: [25, 35, 40, 30, 45, 55, 60, 50, 65, 70, 75, 80],
+                borderColor: theme === 'dark' ? '#00d4aa' : '#0066cc',
+                backgroundColor: theme === 'dark' ? 'rgba(0, 212, 170, 0.1)' : 'rgba(0, 102, 204, 0.1)',
+                tension: 0.4,
+            },
+        ],
+    };
 
-            {loading && <div className="text-center mt-5"><Spinner animation="border" /></div>}
-            {error && <div className="alert alert-danger mt-5">{error}</div>}
+    const chartOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                labels: {
+                    color: theme === 'dark' ? 'white' : 'black',
+                }
+            },
+            title: {
+                display: true,
+                text: 'Monthly Contribution Trend',
+                color: theme === 'dark' ? 'white' : 'black',
+            },
+        },
+        scales: {
+            y: {
+                ticks: {
+                    color: theme === 'dark' ? 'white' : 'black',
+                },
+                grid: {
+                    color: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+                }
+            },
+            x: {
+                ticks: {
+                    color: theme === 'dark' ? 'white' : 'black',
+                },
+                grid: {
+                    color: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+                }
+            }
+        },
+    };
+
+    return (
+        <div className="container my-5" style={{ color: theme === 'dark' ? 'white' : 'black' }}>
+            <div className="typewriter mb-4">
+                <h1>Hi, I'm Pratik Rauniyar</h1>
+            </div>
+            <p className="mb-5">I'm a full-stack developer passionate about creating efficient and scalable applications.</p>
+
+            {loading && (
+                <div className="text-center">
+                    <Spinner animation="border" style={{ color: theme === 'dark' ? 'white' : 'black' }} />
+                    <p className="mt-2">Loading GitHub data...</p>
+                </div>
+            )}
+
+            {error && (
+                <div className="border border-danger rounded rounded-4 p-4 mb-4" style={{ color: theme === 'dark' ? '#ff6b6b' : '#dc3545' }}>
+                    <p>Error loading GitHub data: {error}</p>
+                </div>
+            )}
+
             {data && (
-                <div className="dashboard-container mt-5">
+                <>
+                    {/* GitHub Profile Section */}
+                    <div className="d-flex flex-column mt-4 mb-4">
+                        <h3>GitHub Dashboard</h3>
+                        <p>Latest activity and repository insights</p>
+                    </div>
+                    
                     {data.user && (
-                        <Card className={`mb-4 ${theme === 'dark' ? 'bg-dark text-light border-secondary' : 'bg-light text-dark border-light'}`}>
-                            <Card.Body>
-                                <Row className="align-items-center">
-                                    <Col xs={12} md={3} className="text-center">
-                                        <a href={data.user.html_url} target="_blank" rel="noopener noreferrer">
-                                            <img src={data.user.avatar_url} alt="GitHub Avatar" className="avatar rounded-circle" />
-                                        </a>
-                                    </Col>
-                                    <Col xs={12} md={9}>
-                                        <h2 className={theme === 'dark' ? 'text-light' : 'text-dark'}>{data.user.name}</h2>
-                                        <p className={theme === 'dark' ? 'text-secondary' : 'text-muted'}>@{data.user.login}</p>
-                                        <p className={theme === 'dark' ? 'text-light' : 'text-dark'}>{data.user.bio}</p>
-                                        <p className={theme === 'dark' ? 'text-light' : 'text-dark'}>
-                                            <strong>{data.user.followers}</strong> Followers · <strong>{data.user.following}</strong> Following · <strong>{data.user.public_repos}</strong> Public Repos
-                                        </p>
-                                    </Col>
-                                </Row>
-                            </Card.Body>
-                        </Card>
+                        <div 
+                            style={{ color: theme === 'dark' ? 'white' : 'black' }}
+                            className="border border-secondary rounded rounded-4 p-4 mb-4 d-flex align-items-center gap-3 hoverEffect"
+                        >
+                            <a href={data.user.html_url} target="_blank" rel="noopener noreferrer">
+                                <img src={data.user.avatar_url} alt="GitHub Avatar" className="rounded-circle" style={{ width: '80px', height: '80px' }} />
+                            </a>
+                            <div>
+                                <h4 className="mb-1">{data.user.name}</h4>
+                                <p className="text-secondary mb-2">@{data.user.login}</p>
+                                <p className="mb-2">{data.user.bio}</p>
+                                <div className="d-flex gap-3 small">
+                                    <span><strong>{data.user.followers}</strong> Followers</span>
+                                    <span><strong>{data.user.following}</strong> Following</span>
+                                    <span><strong>{data.user.public_repos}</strong> Public Repos</span>
+                                </div>
+                            </div>
+                        </div>
                     )}
 
-                    <h3 className={theme === 'dark' ? 'text-light' : 'text-dark'}>Top 5 Active Repositories</h3>
-                    <Row>
-                        {data.repos && data.repos
-                            .sort((a, b) => new Date(b.pushed_at || 0) - new Date(a.pushed_at || 0)) // Sort by most recently active (pushed_at)
-                            .slice(0, 5) // Take only top 5
-                            .map(repo => (
-                            <Col key={repo.name} md={6} className="mb-3">
-                                <Card className={`h-100 ${theme === 'dark' ? 'bg-dark text-light border-secondary' : 'bg-light text-dark border-light'}`}>
-                                    <Card.Body>
-                                        <Card.Title>
+                    {/* Contribution Graph */}
+                    <div className="mb-5">
+                        <div className="d-flex flex-column mt-4 mb-4">
+                            <h3>Contribution Trend</h3>
+                            <p>Monthly contribution activity over the year</p>
+                        </div>
+                        <div 
+                            style={{ color: theme === 'dark' ? 'white' : 'black' }}
+                            className="border border-secondary rounded rounded-4 p-4"
+                        >
+                            <Line data={contributionData} options={chartOptions} />
+                        </div>
+                    </div>
+
+                    {/* Top Active Repositories */}
+                    <div className="d-flex flex-column mt-4 mb-4">
+                        <h3>Top Active Repositories</h3>
+                        <p>Repositories with highest commits and recent activity</p>
+                    </div>
+
+                    <div className="row g-4 mt-2">
+                        {(data.topRepos || data.repos)?.slice(0, 5).map((repo, idx) => (
+                            <div key={idx} className="col-12 col-md-6 hoverEffect">
+                                <div 
+                                    style={{ color: theme === 'dark' ? 'white' : 'black' }}
+                                    className="border border-secondary rounded rounded-4 p-4 h-100"
+                                >
+                                    <div className="d-flex align-items-start justify-content-between mb-3">
+                                        <h5 className="mb-1">
                                             <a 
                                                 href={repo.html_url} 
                                                 target="_blank" 
                                                 rel="noopener noreferrer"
-                                                className={theme === 'dark' ? 'text-info' : 'text-primary'}
-                                                style={{ textDecoration: 'none' }}
+                                                className="text-decoration-none"
+                                                style={{ color: theme === 'dark' ? '#00d4aa' : '#0066cc' }}
                                             >
                                                 {repo.name}
                                             </a>
-                                        </Card.Title>
-                                        <Card.Text className={theme === 'dark' ? 'text-light' : 'text-dark'}>
-                                            {repo.description || 'No description available'}
-                                        </Card.Text>
-                                        <div className={`d-flex justify-content-between ${theme === 'dark' ? 'text-secondary' : 'text-muted'}`}>
-                                            <span>
-                                                ⭐ {repo.stargazers_count}
-                                                <span className="ms-3">🍴 {repo.forks_count}</span>
-                                            </span>
-                                            <span>{repo.language || 'N/A'}</span>
+                                        </h5>
+                                        <FontAwesomeIcon icon={faGithub} className="text-secondary" />
+                                    </div>
+                                    
+                                    <p className="text-secondary small mb-3">
+                                        {repo.description || 'No description available'}
+                                    </p>
+
+                                    <div className="d-flex justify-content-between align-items-center mb-3">
+                                        <div className="d-flex gap-3 small">
+                                            <span>⭐ {repo.stargazers_count}</span>
+                                            <span>🍴 {repo.forks_count}</span>
+                                            {repo.language && (
+                                                <span className="badge bg-secondary">{repo.language}</span>
+                                            )}
                                         </div>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
+                                    </div>
+
+                                    {/* Repository Health */}
+                                    <div className="border-top border-secondary pt-3">
+                                        <h6 className="mb-2 text-secondary">Repository Health</h6>
+                                        <div className="small">
+                                            <div className="d-flex justify-content-between mb-1">
+                                                <span>Last commit:</span>
+                                                <span className="text-secondary">
+                                                    {repo.lastCommit 
+                                                        ? new Date(repo.lastCommit).toLocaleDateString()
+                                                        : new Date(repo.pushed_at).toLocaleDateString()
+                                                    }
+                                                </span>
+                                            </div>
+                                            <div className="d-flex justify-content-between mb-1">
+                                                <span>Open Issues:</span>
+                                                <span className="text-secondary">{repo.openIssues !== undefined ? repo.openIssues : repo.open_issues || 0}</span>
+                                            </div>
+                                            <div className="d-flex justify-content-between mb-1">
+                                                <span>Open PRs:</span>
+                                                <span className="text-secondary">{repo.openPRs || 0}</span>
+                                            </div>
+                                            <div className="d-flex justify-content-between">
+                                                <span>Watchers:</span>
+                                                <span className="text-secondary">{repo.watchers !== undefined ? repo.watchers : repo.watchers_count || 0}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         ))}
-                    </Row>
-                </div>
+                    </div>
+                </>
             )}
-        </>
-    )
-}
+        </div>
+    );
+};
 
 export default Home;

@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     console.log('Fetching data from GitHub API...');
     const [userResponse, reposResponse] = await Promise.all([
       fetch(`https://api.github.com/users/${username}`, { headers }),
-      fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=10`, { headers }),
+      fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=20`, { headers }),
     ]);
 
     console.log(`GitHub User API Response Status: ${userResponse.status}`);
@@ -39,12 +39,56 @@ export default async function handler(req, res) {
     const userData = await userResponse.json();
     const reposData = await reposResponse.json();
 
+    // Get additional data for top 5 most active repos (sort by pushed_at to get most recently active)
+    const topRepos = reposData
+      .filter(repo => !repo.fork) // Exclude forked repositories
+      .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))
+      .slice(0, 8); // Get 8 to have backup in case some fail
+
+    // Fetch commits, issues, and PRs for top repos
+    const repoDetails = await Promise.all(
+      topRepos.map(async (repo) => {
+        try {
+          const [commitsResponse, issuesResponse, prsResponse] = await Promise.all([
+            fetch(`https://api.github.com/repos/${username}/${repo.name}/commits?per_page=1`, { headers }),
+            fetch(`https://api.github.com/repos/${username}/${repo.name}/issues?state=open&per_page=100`, { headers }),
+            fetch(`https://api.github.com/repos/${username}/${repo.name}/pulls?state=open&per_page=100`, { headers }),
+          ]);
+
+          const commits = commitsResponse.ok ? await commitsResponse.json() : [];
+          const issues = issuesResponse.ok ? await issuesResponse.json() : [];
+          const prs = prsResponse.ok ? await prsResponse.json() : [];
+
+          // Filter out PRs from issues (GitHub API includes PRs in issues)
+          const actualIssues = issues.filter(issue => !issue.pull_request);
+
+          return {
+            ...repo,
+            lastCommit: commits[0]?.commit?.committer?.date || null,
+            openIssues: actualIssues.length,
+            openPRs: prs.length,
+            watchers: repo.watchers_count
+          };
+        } catch (error) {
+          console.error(`Error fetching details for repo ${repo.name}:`, error);
+          return {
+            ...repo,
+            lastCommit: null,
+            openIssues: 0,
+            openPRs: 0,
+            watchers: repo.watchers_count || 0
+          };
+        }
+      })
+    );
+
     console.log('Successfully fetched and processed data.');
     console.log('--- GitHub API Function End ---');
     
     res.status(200).json({
       user: userData,
       repos: reposData,
+      topRepos: repoDetails,
     });
   } catch (error) {
     console.error('An unexpected error occurred in the function:', error);
