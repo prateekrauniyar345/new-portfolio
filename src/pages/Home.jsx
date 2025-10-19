@@ -47,7 +47,7 @@ const Home = () => {
             {data && (
                 <div className="dashboard-container mt-5">
                     {data.user && (
-                        <Card className="mb-4">
+                        <Card className={`mb-4 ${theme === 'dark' ? 'bg-dark text-light border-secondary' : 'bg-light text-dark border-light'}`}>
                             <Card.Body>
                                 <Row className="align-items-center">
                                     <Col xs={12} md={3} className="text-center">
@@ -56,10 +56,10 @@ const Home = () => {
                                         </a>
                                     </Col>
                                     <Col xs={12} md={9}>
-                                        <h2>{data.user.name}</h2>
-                                        <p className="text-muted">@{data.user.login}</p>
-                                        <p>{data.user.bio}</p>
-                                        <p>
+                                        <h2 className={theme === 'dark' ? 'text-light' : 'text-dark'}>{data.user.name}</h2>
+                                        <p className={theme === 'dark' ? 'text-secondary' : 'text-muted'}>@{data.user.login}</p>
+                                        <p className={theme === 'dark' ? 'text-light' : 'text-dark'}>{data.user.bio}</p>
+                                        <p className={theme === 'dark' ? 'text-light' : 'text-dark'}>
                                             <strong>{data.user.followers}</strong> Followers · <strong>{data.user.following}</strong> Following · <strong>{data.user.public_repos}</strong> Public Repos
                                         </p>
                                     </Col>
@@ -68,22 +68,35 @@ const Home = () => {
                         </Card>
                     )}
 
-                    <h3>Recent Repositories</h3>
+                    <h3 className={theme === 'dark' ? 'text-light' : 'text-dark'}>Top 5 Active Repositories</h3>
                     <Row>
-                        {data.repos && data.repos.map(repo => (
+                        {data.repos && data.repos
+                            .sort((a, b) => new Date(b.pushed_at || 0) - new Date(a.pushed_at || 0)) // Sort by most recently active (pushed_at)
+                            .slice(0, 5) // Take only top 5
+                            .map(repo => (
                             <Col key={repo.name} md={6} className="mb-3">
-                                <Card>
+                                <Card className={`h-100 ${theme === 'dark' ? 'bg-dark text-light border-secondary' : 'bg-light text-dark border-light'}`}>
                                     <Card.Body>
                                         <Card.Title>
-                                            <a href={repo.html_url} target="_blank" rel="noopener noreferrer">{repo.name}</a>
+                                            <a 
+                                                href={repo.html_url} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className={theme === 'dark' ? 'text-info' : 'text-primary'}
+                                                style={{ textDecoration: 'none' }}
+                                            >
+                                                {repo.name}
+                                            </a>
                                         </Card.Title>
-                                        <Card.Text>{repo.description}</Card.Text>
-                                        <div className="d-flex justify-content-between text-muted">
+                                        <Card.Text className={theme === 'dark' ? 'text-light' : 'text-dark'}>
+                                            {repo.description || 'No description available'}
+                                        </Card.Text>
+                                        <div className={`d-flex justify-content-between ${theme === 'dark' ? 'text-secondary' : 'text-muted'}`}>
                                             <span>
                                                 ⭐ {repo.stargazers_count}
                                                 <span className="ms-3">🍴 {repo.forks_count}</span>
                                             </span>
-                                            <span>{repo.language}</span>
+                                            <span>{repo.language || 'N/A'}</span>
                                         </div>
                                     </Card.Body>
                                 </Card>
