@@ -389,7 +389,7 @@ const Home = () => {
                     </div>
 
                     <div className="row g-4 mt-2">
-                        {(data.topRepos || data.repos)?.slice(0, 5).map((repo, idx) => (
+                        {(data.topRepos || data.repos)?.slice(0, 6).map((repo, idx) => (
                             <div key={idx} className="col-12 col-md-6 hoverEffect">
                                 <div 
                                     style={{ 
