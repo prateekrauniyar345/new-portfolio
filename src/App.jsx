@@ -9,6 +9,8 @@ import ThemeProvider from './components/ThemeProvider';
 import {Link, Routes, Route} from 'react-router-dom';
 import Footer from './components/Footer'; 
 
+import { useEffect, useState } from 'react';
+
 function App() {
   return (
     <>
@@ -37,6 +39,7 @@ function App() {
     </ThemeProvider>
     {/* Footer component at the bottom of the page */}
     <Footer />
+
 
     </>
   );
