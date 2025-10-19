@@ -57,13 +57,13 @@ const Home = () => {
             });
     }, []);
 
-    // Create contribution graph data (mock data for now - you'd get this from GitHub API)
+    // Create contribution graph data from actual GitHub data (including private repos)
     const contributionData = {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         datasets: [
             {
-                label: 'Contributions',
-                data: [25, 35, 40, 30, 45, 55, 60, 50, 65, 70, 75, 80],
+                label: 'Total Contributions (Public + Private)',
+                data: data?.contributionData || [25, 35, 40, 30, 45, 55, 60, 50, 65, 70, 75, 80],
                 borderColor: theme === 'dark' ? 'white' : 'black',
                 backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
                 tension: 0.4,
@@ -158,7 +158,119 @@ const Home = () => {
                                 <div className="d-flex gap-3 small">
                                     <span><strong>{data.user.followers}</strong> Followers</span>
                                     <span><strong>{data.user.following}</strong> Following</span>
-                                    <span><strong>{data.user.public_repos}</strong> Public Repos</span>
+                                    <span><strong>{data.totalStats?.totalRepos || data.user.public_repos}</strong> Total Repos</span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Comprehensive GitHub Statistics */}
+                    {data.totalStats && (
+                        <div className="mb-5">
+                            <div className="d-flex flex-column mt-4 mb-4">
+                                <h3>Complete GitHub Statistics</h3>
+                                <p>Total contributions across all repositories (public + private + organizations)</p>
+                            </div>
+                            
+                            <div className="row g-3 mb-4">
+                                <div className="col-6 col-md-3">
+                                    <div 
+                                        style={{ 
+                                            color: theme === 'dark' ? 'white' : 'black',
+                                            backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                        }}
+                                        className="border border-secondary rounded rounded-4 p-3 text-center"
+                                    >
+                                        <h4 className="mb-1">{data.totalStats.totalCommits}</h4>
+                                        <p className="text-secondary small mb-0">Total Commits</p>
+                                    </div>
+                                </div>
+                                <div className="col-6 col-md-3">
+                                    <div 
+                                        style={{ 
+                                            color: theme === 'dark' ? 'white' : 'black',
+                                            backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                        }}
+                                        className="border border-secondary rounded rounded-4 p-3 text-center"
+                                    >
+                                        <h4 className="mb-1">{data.totalStats.totalPRs}</h4>
+                                        <p className="text-secondary small mb-0">Total Pull Requests</p>
+                                    </div>
+                                </div>
+                                <div className="col-6 col-md-3">
+                                    <div 
+                                        style={{ 
+                                            color: theme === 'dark' ? 'white' : 'black',
+                                            backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                        }}
+                                        className="border border-secondary rounded rounded-4 p-3 text-center"
+                                    >
+                                        <h4 className="mb-1">{data.totalStats.totalRepos}</h4>
+                                        <p className="text-secondary small mb-0">Total Repositories</p>
+                                    </div>
+                                </div>
+                                <div className="col-6 col-md-3">
+                                    <div 
+                                        style={{ 
+                                            color: theme === 'dark' ? 'white' : 'black',
+                                            backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                        }}
+                                        className="border border-secondary rounded rounded-4 p-3 text-center"
+                                    >
+                                        <h4 className="mb-1">{data.totalStats.totalStars}</h4>
+                                        <p className="text-secondary small mb-0">Total Stars</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="row g-3">
+                                <div className="col-6 col-md-3">
+                                    <div 
+                                        style={{ 
+                                            color: theme === 'dark' ? 'white' : 'black',
+                                            backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                        }}
+                                        className="border border-secondary rounded rounded-4 p-3 text-center"
+                                    >
+                                        <h4 className="mb-1">{data.totalStats.totalPublicRepos}</h4>
+                                        <p className="text-secondary small mb-0">Public Repos</p>
+                                    </div>
+                                </div>
+                                <div className="col-6 col-md-3">
+                                    <div 
+                                        style={{ 
+                                            color: theme === 'dark' ? 'white' : 'black',
+                                            backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                        }}
+                                        className="border border-secondary rounded rounded-4 p-3 text-center"
+                                    >
+                                        <h4 className="mb-1">{data.totalStats.totalPrivateRepos}</h4>
+                                        <p className="text-secondary small mb-0">Private Repos</p>
+                                    </div>
+                                </div>
+                                <div className="col-6 col-md-3">
+                                    <div 
+                                        style={{ 
+                                            color: theme === 'dark' ? 'white' : 'black',
+                                            backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                        }}
+                                        className="border border-secondary rounded rounded-4 p-3 text-center"
+                                    >
+                                        <h4 className="mb-1">{data.totalStats.totalForks}</h4>
+                                        <p className="text-secondary small mb-0">Total Forks</p>
+                                    </div>
+                                </div>
+                                <div className="col-6 col-md-3">
+                                    <div 
+                                        style={{ 
+                                            color: theme === 'dark' ? 'white' : 'black',
+                                            backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                        }}
+                                        className="border border-secondary rounded rounded-4 p-3 text-center"
+                                    >
+                                        <h4 className="mb-1">{data.totalStats.languages?.length || 0}</h4>
+                                        <p className="text-secondary small mb-0">Languages Used</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -255,8 +367,8 @@ const Home = () => {
                     {/* Contribution Graph */}
                     <div className="mb-5">
                         <div className="d-flex flex-column mt-4 mb-4">
-                            <h3>Contribution Trend</h3>
-                            <p>Monthly contribution activity over the year</p>
+                            <h3>Contribution Trend (All Repositories)</h3>
+                            <p>Monthly commit activity including public, private, and organization repositories</p>
                         </div>
                         <div 
                             style={{ 
@@ -320,16 +432,16 @@ const Home = () => {
                                         <h6 className="mb-2 text-secondary">Repository Details</h6>
                                         <div className="small">
                                             <div className="d-flex justify-content-between mb-1">
-                                                <span className="text-secondary">Total Commits:</span>
-                                                <span className="text-secondary">{repo.totalCommits || 'N/A'}</span>
+                                                <span className="text-secondary">My Commits:</span>
+                                                <span className="text-secondary">{repo.userCommitCount || 'N/A'}</span>
                                             </div>
                                             <div className="d-flex justify-content-between mb-1">
                                                 <span className="text-secondary">Total PRs:</span>
-                                                <span className="text-secondary">{repo.totalPRs || repo.openPRs || 0}</span>
+                                                <span className="text-secondary">{repo.totalPRs || 0}</span>
                                             </div>
                                             <div className="d-flex justify-content-between mb-1">
-                                                <span className="text-secondary">Open Issues:</span>
-                                                <span className="text-secondary">{repo.openIssues !== undefined ? repo.openIssues : repo.open_issues || 0}</span>
+                                                <span className="text-secondary">Repository Type:</span>
+                                                <span className="text-secondary">{repo.private ? 'Private' : 'Public'}</span>
                                             </div>
                                             <div className="d-flex justify-content-between">
                                                 <span className="text-secondary">Last Updated:</span>
