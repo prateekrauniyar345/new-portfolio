@@ -164,6 +164,94 @@ const Home = () => {
                         </div>
                     )}
 
+                    {/* GitHub Badges Section */}
+                    <div className="mb-5">
+                        <div className="d-flex flex-column mt-4 mb-4">
+                            <h3>GitHub Achievements</h3>
+                            <p>Programming languages, stats, and achievements</p>
+                        </div>
+                        
+                        {data.user && (
+                            <div className="row g-3">
+                                {/* GitHub Stats Badge */}
+                                <div className="col-12 col-md-6">
+                                    <div 
+                                        style={{ 
+                                            color: theme === 'dark' ? 'white' : 'black',
+                                            backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                        }}
+                                        className="border border-secondary rounded rounded-4 p-3 h-100"
+                                    >
+                                        <h6 className="text-secondary mb-3">GitHub Stats</h6>
+                                        <img 
+                                            src={`https://github-readme-stats.vercel.app/api?username=${data.user.login}&show_icons=true&theme=${theme === 'dark' ? 'dark' : 'light'}&hide_border=true&bg_color=${theme === 'dark' ? '000000' : 'ffffff'}&text_color=${theme === 'dark' ? 'ffffff' : '000000'}&icon_color=${theme === 'dark' ? 'ffffff' : '000000'}`}
+                                            alt="GitHub Stats"
+                                            style={{ width: '100%', maxWidth: '400px' }}
+                                            className="img-fluid"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Top Languages Badge */}
+                                <div className="col-12 col-md-6">
+                                    <div 
+                                        style={{ 
+                                            color: theme === 'dark' ? 'white' : 'black',
+                                            backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                        }}
+                                        className="border border-secondary rounded rounded-4 p-3 h-100"
+                                    >
+                                        <h6 className="text-secondary mb-3">Most Used Languages</h6>
+                                        <img 
+                                            src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${data.user.login}&layout=compact&theme=${theme === 'dark' ? 'dark' : 'light'}&hide_border=true&bg_color=${theme === 'dark' ? '000000' : 'ffffff'}&text_color=${theme === 'dark' ? 'ffffff' : '000000'}`}
+                                            alt="Top Languages"
+                                            style={{ width: '100%', maxWidth: '400px' }}
+                                            className="img-fluid"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* GitHub Streak */}
+                                <div className="col-12">
+                                    <div 
+                                        style={{ 
+                                            color: theme === 'dark' ? 'white' : 'black',
+                                            backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                        }}
+                                        className="border border-secondary rounded rounded-4 p-3 text-center"
+                                    >
+                                        <h6 className="text-secondary mb-3">GitHub Streak</h6>
+                                        <img 
+                                            src={`https://streak-stats.demolab.com/?user=${data.user.login}&theme=${theme === 'dark' ? 'dark' : 'light'}&hide_border=true&background=${theme === 'dark' ? '000000' : 'ffffff'}&stroke=${theme === 'dark' ? 'ffffff' : '000000'}&ring=${theme === 'dark' ? 'ffffff' : '000000'}&fire=${theme === 'dark' ? 'ffffff' : '000000'}&currStreakLabel=${theme === 'dark' ? 'ffffff' : '000000'}&sideNums=${theme === 'dark' ? 'ffffff' : '000000'}&currStreakNum=${theme === 'dark' ? 'ffffff' : '000000'}&sideLabels=${theme === 'dark' ? 'ffffff' : '000000'}&dates=${theme === 'dark' ? 'ffffff' : '000000'}`}
+                                            alt="GitHub Streak"
+                                            style={{ width: '100%', maxWidth: '600px' }}
+                                            className="img-fluid"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Trophy Badge */}
+                                <div className="col-12">
+                                    <div 
+                                        style={{ 
+                                            color: theme === 'dark' ? 'white' : 'black',
+                                            backgroundColor: theme === 'dark' ? 'black' : 'white'
+                                        }}
+                                        className="border border-secondary rounded rounded-4 p-3 text-center"
+                                    >
+                                        <h6 className="text-secondary mb-3">GitHub Trophies</h6>
+                                        <img 
+                                            src={`https://github-profile-trophy.vercel.app/?username=${data.user.login}&theme=${theme === 'dark' ? 'onedark' : 'flat'}&no-frame=true&no-bg=true&margin-w=4&column=4`}
+                                            alt="GitHub Trophies"
+                                            style={{ width: '100%', maxWidth: '800px' }}
+                                            className="img-fluid"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
                     {/* Contribution Graph */}
                     <div className="mb-5">
                         <div className="d-flex flex-column mt-4 mb-4">
