@@ -107,7 +107,7 @@ const projects = [
   {
     project: 'Valora (Online Fashion Store)',
     skills: ['React', 'NodeJS', 'Express', 'MongoDB', 'Stripe'],
-    link:'https://github.com/prateekrauniyar345/lab-final',
+    link:'https://github.com/prateekrauniyar345/Valora.git',
     description:
       'E-Commerce platform with user authentication, product listings, and a shopping cart, integrating Stripe for secure payments.',
   },
